@@ -1,8 +1,8 @@
 body {
     margin: 0;
     overflow: hidden;
-    background-color: #111;
-    font-family: sans-serif;
+    background-color: #1A1A2E; /* デザイン指示のダークネイビーに変更 */
+    font-family: 'Inter', 'Helvetica Neue', 'Noto Sans JP', sans-serif; /* 洗練されたフォントに変更 */
     color: white;
 }
 
