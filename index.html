@@ -3,16 +3,25 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>多層素材の機能表現 (Artience Inspired)</title>
+    <title>分散理論に基づくマテリアルシミュレーター</title>
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
     <div id="canvas-container"></div>
 
-    <div id="slider-container">
-        <span class="label">ザラザラ</span>
-        <input type="range" id="touch-slider" min="0" max="100" value="50">
-        <span class="label">ツルツル</span>
+    <div id="controls-panel">
+        <div class="control-row">
+            <label for="aggregation-slider">凝集 ◀︎▶︎ 反発</label>
+            <input type="range" id="aggregation-slider" class="slider" min="0" max="100" value="100">
+        </div>
+        <div class="control-row">
+            <label for="size-slider">粒子径 (小 ◀︎▶︎ 大)</label>
+            <input type="range" id="size-slider" class="slider" min="10" max="150" value="50">
+        </div>
+        <div class="control-row">
+            <label for="distribution-slider">分布 (均一 ◀︎▶︎ 不均一)</label>
+            <input type="range" id="distribution-slider" class="slider" min="0" max="100" value="0">
+        </div>
     </div>
 
     <script type="module" src="script.js"></script>
