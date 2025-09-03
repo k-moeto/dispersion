@@ -59,11 +59,29 @@ const distributionSlider = document.getElementById('distribution-slider');
 
 // --- 状態を更新する関数 ---
 function updateSimulation() {
+    // スライダーの値を取得
+    const aggregationValue = parseFloat(aggregationSlider.value) / 100.0; // 0 (凝集) to 1 (反発)
     const sizeValue = parseFloat(sizeSlider.value) / 100.0;
     const distributionValue = parseFloat(distributionSlider.value) / 100.0;
     
+    // 凝集度合いに応じてマテリアルの質感を変更
+    // 凝集するとマットに(roughness=1)、分散するとツルツルに(roughness=0.1)
+    sharedMaterial.roughness = THREE.MathUtils.lerp(1.0, 0.1, aggregationValue);
+    sharedMaterial.metalness = THREE.MathUtils.lerp(0.0, 0.5, aggregationValue);
+
     particles.forEach(p => {
-        // 粒子径と分布をスケールに反映
+        // 1. 凝集・反発のターゲット位置を計算
+        // aggregationValueが0のとき中心、1のとき初期位置になるように線形補間
+        const targetPosition = new THREE.Vector3().lerpVectors(
+            new THREE.Vector3(0, 0, 0), // 凝集時のターゲット
+            p.userData.initialPosition,  // 反発時のターゲット
+            aggregationValue
+        );
+
+        // 2. 現在位置からターゲット位置へ滑らかに移動
+        p.position.lerp(targetPosition, 0.05);
+
+        // 3. 粒子径と分布をスケールに反映
         const baseScale = sizeValue;
         const randomScale = p.userData.randomFactor * distributionValue;
         const finalScale = baseScale + randomScale;
@@ -75,32 +93,14 @@ function updateSimulation() {
 function animate() {
     requestAnimationFrame(animate);
 
-    // 凝集・反発バランスの処理
-    const aggregationValue = parseFloat(aggregationSlider.value) / 100.0; // 0 (凝集) to 1 (反発)
-
-    particles.forEach(p => {
-        // 凝集時は中心(0,0,0)へ、反発時は初期位置へ向かう
-        const targetPosition = aggregationValue === 0 ? new THREE.Vector3(0,0,0) : p.userData.initialPosition;
-        // lerpを使って滑らかにターゲットへ移動
-        p.position.lerp(targetPosition, 0.05);
-    });
-
-    // 凝集度合いに応じてマテリアルの質感を変更
-    // 凝集するとマットに(roughness=1)、分散するとツルツルに(roughness=0.1)
-    sharedMaterial.roughness = THREE.MathUtils.lerp(1.0, 0.1, aggregationValue);
-    sharedMaterial.metalness = THREE.MathUtils.lerp(0.0, 0.5, aggregationValue);
+    // 毎フレームシミュレーションの状態を更新
+    updateSimulation();
 
     controls.update();
     renderer.render(scene, camera);
 }
 
-// --- イベントリスナー ---
-aggregationSlider.addEventListener('input', updateSimulation);
-sizeSlider.addEventListener('input', updateSimulation);
-distributionSlider.addEventListener('input', updateSimulation);
-
-// 初期化
-updateSimulation();
+// 初期化 & アニメーション開始
 animate();
 
 // ウィンドウリサイズ対応
