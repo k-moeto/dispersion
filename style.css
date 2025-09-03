@@ -1,0 +1,36 @@
+body {
+    margin: 0;
+    overflow: hidden;
+    background-color: #4B0082; /* 紫の背景 */
+    font-family: sans-serif;
+}
+
+#canvas-container {
+    width: 100vw;
+    height: 100vh;
+    display: block;
+}
+
+#slider-container {
+    position: absolute;
+    bottom: 20px;
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 10;
+    background: rgba(255, 255, 255, 0.7);
+    padding: 10px 20px;
+    border-radius: 8px;
+    display: flex;
+    align-items: center;
+    color: #333;
+}
+
+#touch-slider {
+    width: 200px;
+    margin: 0 15px;
+}
+
+.label {
+    min-width: 60px;
+    text-align: center;
+}
