@@ -5,6 +5,22 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>分散理論に基づくマテリアルシミュレーター</title>
     <link rel="stylesheet" href="style.css">
+    <script type="importmap">
+    {
+        "imports": {
+            "three": "./vendor/three.module.js",
+            "three/examples/jsm/controls/OrbitControls.js": "./vendor/OrbitControls.js",
+            "three/examples/jsm/postprocessing/EffectComposer.js": "./vendor/EffectComposer.js",
+            "three/examples/jsm/postprocessing/RenderPass.js": "./vendor/RenderPass.js",
+            "three/examples/jsm/postprocessing/UnrealBloomPass.js": "./vendor/UnrealBloomPass.js",
+            "three/examples/jsm/postprocessing/Pass.js": "./vendor/Pass.js",
+            "three/examples/jsm/postprocessing/ShaderPass.js": "./vendor/ShaderPass.js",
+            "three/examples/jsm/postprocessing/MaskPass.js": "./vendor/MaskPass.js",
+            "three/examples/jsm/shaders/CopyShader.js": "./shaders/CopyShader.js",
+            "three/examples/jsm/shaders/LuminosityHighPassShader.js": "./shaders/LuminosityHighPassShader.js"
+        }
+    }
+    </script>
 </head>
 <body>
     <div id="canvas-container"></div>
